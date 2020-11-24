@@ -2,8 +2,6 @@ timestamp(){
  echo $(date "+%Y/%m/%d-%H:%M:%S") #current time
 }
 
-
-
 counter=0
 while true
 	do
