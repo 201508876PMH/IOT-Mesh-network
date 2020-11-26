@@ -10,5 +10,9 @@ if __name__ == "__main__":
     data_parser.parse_log_to_csv("../Logfiles/logfile_node04.txt")
 
     mesh_data_analyser = MeshDataAnalyser()
-    data_frame = mesh_data_analyser.load_data_table("logfile_node01.csv")
-    mesh_data_analyser.plot_data(data_frame)
+    data_frame_1 = mesh_data_analyser.load_data_table("logfile_node01.csv")
+    data_frame_4 = mesh_data_analyser.load_data_table("logfile_node04.csv")
+    data_frame_6 = mesh_data_analyser.load_data_table("logfile_node06.csv")
+
+
+    mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
