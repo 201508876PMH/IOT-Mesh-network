@@ -1,0 +1,7 @@
+Current timestamp:  2020/11/24-13:02:50
+Number of file iterations:  676
+
+
+e4:95:6e:4b:be:d3 metric 591 bitrate mcs2x1
+e4:95:6e:4b:b7:13 metric 533 bitrate mcs2x1
+ff:ff:ff:ff:ff:ff metric 1073741824 bitrate mcs2x1

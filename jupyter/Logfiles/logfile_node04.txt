@@ -1,0 +1,19 @@
+Current timestamp:  2020/08/05-18:16:47
+Number of file iterations:  387
+
+94:83:c4:02:8c:0e: iface mon-phy0 bitrate 0, mcs 2, nss 1 (inactivity_penalty: 0), 
+	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 137 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	rates (TX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 248 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+e4:95:6e:4b:b7:13: iface mon-phy0 bitrate 0, mcs 2, nss 1 (inactivity_penalty: 0), 
+	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 241 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	rates (TX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 217 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+
+94:83:c4:02:8c:0e metric 510 bitrate mcs2x1
+  94:83:c4:02:8c:0e - metric 0, success on bitrate mcs2x1: 0.973, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:b7:13 - metric 510, success on bitrate mcs2x1: 0.851, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+e4:95:6e:4b:b7:13 metric 578 bitrate mcs2x1
+  e4:95:6e:4b:b7:13 - metric 0, success on bitrate mcs2x1: 0.851, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
+  94:83:c4:02:8c:0e - metric 529, success on bitrate mcs2x1: 0.973, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
+ff:ff:ff:ff:ff:ff metric 1073741824 bitrate mcs2x1
+  94:83:c4:02:8c:0e - metric 1073741824, success on bitrate mcs2x1: 0.973, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:b7:13 - metric 1073741824, success on bitrate mcs2x1: 0.851, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
