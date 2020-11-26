@@ -1,19 +1,20 @@
-Current timestamp:  2020/08/05-13:12:15
-Number of file iterations:  35
+IP.addr:  inet addr:10.1.0.1
+Current timestamp:  2020/08/05-14:59:16
+Number of file iterations:  228
 
 e4:95:6e:4b:b7:13: iface mon-phy0 bitrate 0, mcs 2, nss 1 (inactivity_penalty: 0), 
-	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 237 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-	rates (TX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 252 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-e4:95:6e:4b:be:d3: iface mon-phy0 bitrate 0, mcs 2, nss 1 (inactivity_penalty: 0), 
-	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 222 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 252 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 	rates (TX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 234 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+e4:95:6e:4b:be:d3: iface mon-phy0 bitrate 0, mcs 2, nss 1 (inactivity_penalty: 0), 
+	rates (RX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 213 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	rates (TX): 0 0 0 0 0 0 0 0 0 0 0 0 0 0 251 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 
-e4:95:6e:4b:be:d3 metric 536 bitrate mcs2x1
-  e4:95:6e:4b:be:d3 - metric 0, success on bitrate mcs2x1: 0.937, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
-  e4:95:6e:4b:b7:13 - metric 565, success on bitrate mcs2x1: 0.988, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+e4:95:6e:4b:be:d3 metric 501 bitrate mcs2x1
+  e4:95:6e:4b:be:d3 - metric 0, success on bitrate mcs2x1: 0.984, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:b7:13 - metric 650, success on bitrate mcs2x1: 0.937, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
 ff:ff:ff:ff:ff:ff metric 1073741824 bitrate mcs2x1
-  e4:95:6e:4b:b7:13 - metric 1073741824, success on bitrate mcs2x1: 0.988, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
-  e4:95:6e:4b:be:d3 - metric 1073741824, success on bitrate mcs2x1: 0.937, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
-e4:95:6e:4b:b7:13 metric 497 bitrate mcs2x1
-  e4:95:6e:4b:b7:13 - metric 0, success on bitrate mcs2x1: 0.988, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
-  e4:95:6e:4b:be:d3 - metric 708, success on bitrate mcs2x1: 0.937, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:b7:13 - metric 1073741824, success on bitrate mcs2x1: 0.937, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:be:d3 - metric 1073741824, success on bitrate mcs2x1: 0.984, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
+e4:95:6e:4b:b7:13 metric 524 bitrate mcs2x1
+  e4:95:6e:4b:b7:13 - metric 0, success on bitrate mcs2x1: 0.937, downstream expected contribution 1.000, (single bitrate 0, mcs 2)
+  e4:95:6e:4b:be:d3 - metric 536, success on bitrate mcs2x1: 0.984, downstream expected contribution 0.000, (single bitrate 0, mcs 2)
