@@ -1,0 +1,2 @@
+ip,iterations,timestamp,neighbor1,RX_neighbor1,TX_neighbor1,neighbor2,RX_neighbor2,TX_neighbor2,neighbor3, RX_neighbor3,TX_neighbor3
+addr:10.1.0.1, 228, 2020/08/05-14:59:16, e4:95:6e:4b:b7:13:, 234, 252, e4:95:6e:4b:be:d3:, 251, 213
