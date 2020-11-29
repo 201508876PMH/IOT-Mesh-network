@@ -12,6 +12,8 @@ import sympy
 
 class MeshDataAnalyser():
     def __init__(self):
+        self.f = plt.figure()
+        self.graph = self.f.add_subplot(111)
         pass
 
     def load_data_table(self, csv_file_name):
@@ -24,6 +26,8 @@ class MeshDataAnalyser():
 
     def plot_data(self, data_frame_1, data_frame_4, data_frame_6):
        
+        plt.clf()
+
         # Creates nodes and the relation
         df = panda.DataFrame({'from':['R','R','D04','D04','D06','D06'], 'to':['D04','D06','R','D06','R','D04']})
         G=nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.DiGraph()) 
@@ -65,7 +69,6 @@ class MeshDataAnalyser():
         plt.axhline(.3, alpha=0.1, color='black')
 
         #Create a dict of fixed node positions
-        #nodePosDict = {'R':[0.1,0.3], 'D04':[0.5,.9], 'D06':[.9,.18]}
         nodePosDict = {'R':[x_y_casted[0], x_y_casted[1]], 'D04':[x_y_casted[2], x_y_casted[3]], 'D06':[x_y_casted[4], x_y_casted[5]]}
 
         # Make the graph - add the pos and connectionstyle arguments
@@ -74,9 +77,25 @@ class MeshDataAnalyser():
             connectionstyle='arc3, rad = 0.1')
             
         plt.axis('on')
-        plt.pause(3)
+        #self.graph.plot(x_y_casted)
+        plt.draw()
         plt.show()
 
+    def test_plot(self):
+        x = np.linspace(0, 6*np.pi, 100)
+        y = np.sin(x)
+
+        # You probably won't need this if you're embedding things in a tkinter plot...
+        plt.ion()
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        line1, = ax.plot(x, y, 'r-') # Returns a tuple of line objects, thus the comma
+
+        for phase in np.linspace(0, 10*np.pi, 500):
+            line1.set_ydata(np.sin(x + phase))
+            fig.canvas.draw()
+            fig.canvas.flush_events()
 
 
 

@@ -22,9 +22,11 @@ if __name__ == "__main__":
         data_frame_1 = mesh_data_analyser.load_data_table("logfile_node01.csv")
         data_frame_4 = mesh_data_analyser.load_data_table("logfile_node04.csv")
         data_frame_6 = mesh_data_analyser.load_data_table("logfile_node06.csv")
+
+        mesh_data_analyser.test_plot()
         
-        mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
-        print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
+        #mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
+       # print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
 
     
        
