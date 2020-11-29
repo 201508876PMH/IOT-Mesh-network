@@ -12,9 +12,11 @@ import sympy
 
 class MeshDataAnalyser():
     def __init__(self):
-        self.f = plt.figure()
-        self.graph = self.f.add_subplot(111)
-        pass
+        # Turn interative mode on
+        plt.ion()
+        # show any figures (This will NOT block if interactive mode is on)
+        plt.show()
+        
 
     def load_data_table(self, csv_file_name):
         csv_path = os.path.join(".", "CSV_files/" ,csv_file_name)
@@ -24,9 +26,12 @@ class MeshDataAnalyser():
         
         return data_frame
 
+
     def plot_data(self, data_frame_1, data_frame_4, data_frame_6):
-       
         plt.clf()
+        axes = plt.gca()
+        axes.set_xlim([-20,120])
+        axes.set_ylim([-20,120])
 
         # Creates nodes and the relation
         df = panda.DataFrame({'from':['R','R','D04','D04','D06','D06'], 'to':['D04','D06','R','D06','R','D04']})
@@ -39,8 +44,8 @@ class MeshDataAnalyser():
         weight_dongle_04_to_dongle_06 =  self.normalize_to_speed(((data_frame_4["RX_neighbor2"].values[0]+ data_frame_4["TX_neighbor2"].values[0])/2), speed)
         
         # Add weight between nodes
-        G['R']['D04']['weight'] = weight_router_to_dongle_04
-        G['R']['D06']['weight'] = weight_router_to_dongle_06
+        G['R']['D04']['weight'] = weight_router_to_dongle_04 
+        G['R']['D06']['weight'] = weight_router_to_dongle_06 
         G['D06']['D04']['weight'] = weight_dongle_04_to_dongle_06
 
         # genereate dist matrix, and estimate x,y coordss
@@ -65,7 +70,7 @@ class MeshDataAnalyser():
         labels = nx.get_edge_attributes(G,'weight')
         nx.draw_networkx_edge_labels(G,pos=labelPosDict, edge_labels=labels)
 
-        plt.axvline(.1, alpha=0.1, color='black')
+        plt.axvline(.3, alpha=0.1, color='black')
         plt.axhline(.3, alpha=0.1, color='black')
 
         #Create a dict of fixed node positions
@@ -75,11 +80,27 @@ class MeshDataAnalyser():
         nx.draw(G,with_labels=True, pos=nodePosDict,
             node_size=1500, alpha=0.3, font_weight="bold", arrows=True,
             connectionstyle='arc3, rad = 0.1')
-            
+             
         plt.axis('on')
-        #self.graph.plot(x_y_casted)
         plt.draw()
-        plt.show()
+        plt.pause(1)
+
+
+    def test_plot_V2(self):
+        #plt.ion()
+        fig, ax = plt.subplots(nrows=2, ncols=1)
+        #plt.show()
+
+        while True:
+            x=np.arange(10)
+            y=np.random.rand(10)
+
+            ax[0].plot(x,y)
+            ax[1].plot(x,2*y)
+
+            plt.draw()
+
+            plt.pause(3)
 
     def test_plot(self):
         x = np.linspace(0, 6*np.pi, 100)
