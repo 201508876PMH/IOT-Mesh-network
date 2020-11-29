@@ -1,6 +1,9 @@
 import pandas as panda
 import os
+import numpy
+from numpy import linalg as LA
 import matplotlib.pyplot as plt
+import math
 import networkx as nx
 from tabulate import tabulate
 import numpy as np
@@ -18,64 +21,64 @@ class MeshDataAnalyser():
         
         return data_frame
 
-    def plot_data(self, data_frame_1, data_frame_4, data_frame_6, result):
+    def plot_data(self, data_frame_1, data_frame_4, data_frame_6):
        
+        # Creates nodes and the relation
         df = panda.DataFrame({'from':['R','R','D04','D04','D06','D06'], 'to':['D04','D06','R','D06','R','D04']})
         G=nx.from_pandas_edgelist(df, 'from', 'to', create_using=nx.DiGraph()) 
 
-        weight_router_to_dongle_04 =  ((data_frame_1["RX_neighbor1"].values[0]+ data_frame_1["TX_neighbor1"].values[0])/2)
-        weight_router_to_dongle_06 = ((data_frame_1["RX_neighbor2"].values[0]+ data_frame_1["TX_neighbor2"].values[0])/2)
-        weight_dongle_04_to_dongle_06 =  ((data_frame_4["RX_neighbor2"].values[0]+ data_frame_4["TX_neighbor2"].values[0])/2)
-         
-        print(weight_router_to_dongle_06)
-
+        # Fix the mean value
+        speed = 100
+        weight_router_to_dongle_04 =  self.normalize_to_speed(((data_frame_1["RX_neighbor1"].values[0]+ data_frame_1["TX_neighbor1"].values[0])/2), speed)
+        weight_router_to_dongle_06 = self.normalize_to_speed(((data_frame_1["RX_neighbor2"].values[0]+ data_frame_1["TX_neighbor2"].values[0])/2), speed)
+        weight_dongle_04_to_dongle_06 =  self.normalize_to_speed(((data_frame_4["RX_neighbor2"].values[0]+ data_frame_4["TX_neighbor2"].values[0])/2), speed)
         
+        # Add weight between nodes
         G['R']['D04']['weight'] = weight_router_to_dongle_04
         G['R']['D06']['weight'] = weight_router_to_dongle_06
         G['D06']['D04']['weight'] = weight_dongle_04_to_dongle_06
 
-        #pos = nx.spring_layout(G)
-        #instead of spring, set the positions yourself
-        #labelPosDict = {'R':[0.1,0.3], 'D04':[0.5,.9], 'D06':[.9,.18]}
-        print(result)
+        # genereate dist matrix, and estimate x,y coordss
+        distance_matrix = self.generate_distance_matrix(weight_router_to_dongle_04, weight_router_to_dongle_06, weight_dongle_04_to_dongle_06)
+        print(f"dist_matrix : \n {distance_matrix}")
+        x_y_cordinates = self.give_coords(distance_matrix)
+        print(f"x,y coords {x_y_cordinates}")
 
+        x_1, y_1 = (x_y_cordinates[0,0]), (x_y_cordinates[0,1])
+        x_2, y_2 = (x_y_cordinates[1,0]), (x_y_cordinates[1,1])
+        x_3, y_3 = (x_y_cordinates[2,0]), (x_y_cordinates[2,1])
 
-        x_1, y_1 = (result[0,0]), (result[0,1])
-        x_2, y_2 = (result[1,0]), (result[1,1])
-        x_3, y_3 = (result[2,0]), (result[2,1])
+        x_y_casted = [x_1, y_1, x_2, y_2, x_3, y_3]
 
-        test_list = [x_1, y_1, x_2, y_2, x_3, y_3]
+        for i,elem in enumerate(x_y_casted):
+            print(f"value : {elem} , type : {type(elem)}")
+            x_y_casted[i] = int(x_y_casted[i])
 
-        lort = []
-        for i,elem in enumerate(test_list):
-            element_to_add = elem
-            print(type(element_to_add))
-
-            lort.append(int(element_to_add).real)
-
-        print(lort)
-
-
-        labelPosDict = {'R':[lort[0], lort[1]], 'D04':[lort[2], lort[3]], 'D06':[lort[4], lort[5]]}
+        print(x_y_casted)
+        labelPosDict = {'R':[x_y_casted[0], x_y_casted[1]], 'D04':[x_y_casted[2], x_y_casted[3]], 'D06':[x_y_casted[4], x_y_casted[5]]}
         
         labels = nx.get_edge_attributes(G,'weight')
         nx.draw_networkx_edge_labels(G,pos=labelPosDict, edge_labels=labels)
 
-        plt.axvline(.1, alpha=0.1, color='green')
-        plt.axhline(.3, alpha=0.1, color='green')
+        plt.axvline(.1, alpha=0.1, color='black')
+        plt.axhline(.3, alpha=0.1, color='black')
 
         #Create a dict of fixed node positions
         #nodePosDict = {'R':[0.1,0.3], 'D04':[0.5,.9], 'D06':[.9,.18]}
-        nodePosDict = {'R':[lort[0], lort[1]], 'D04':[lort[2], lort[3]], 'D06':[lort[4], lort[5]]}
+        nodePosDict = {'R':[x_y_casted[0], x_y_casted[1]], 'D04':[x_y_casted[2], x_y_casted[3]], 'D06':[x_y_casted[4], x_y_casted[5]]}
 
         # Make the graph - add the pos and connectionstyle arguments
         nx.draw(G,with_labels=True, pos=nodePosDict,
                 node_size=1500, alpha=0.3, font_weight="bold", arrows=True,
             connectionstyle='arc3, rad = 0.1')
 
+        #plt.axis.set_xticks(1000)
+        #plt.axis.set_yticks(1000)
         plt.axis('on')
         plt.show()
 
+
+    # https://stackoverflow.com/questions/18096783/using-distance-matrix-to-find-coordinate-points-of-set-of-points 
     def give_coords(self, distances):
         distances = np.array(distances)
 
@@ -97,3 +100,147 @@ class MeshDataAnalyser():
             X[point2,:point2] = sympy.solve(expressions, list(X[point2,:point2]))[1]
 
         return X
+        
+
+    def normalize_to_speed(self, value, speed):
+        return int((value/255)*100)
+
+
+    def generate_distance_matrix(self, weight_router_to_dongle_04, weight_router_to_dongle_06, weight_dongle_04_to_dongle_06):
+        distance_matric = numpy.zeros((3, 3))
+
+        distance_matric[0][1] =  weight_router_to_dongle_04
+        distance_matric[0][2] =  weight_router_to_dongle_06
+        distance_matric[1][0] =  weight_router_to_dongle_04
+        distance_matric[1][2] =  weight_dongle_04_to_dongle_06
+        distance_matric[2][0] =  weight_router_to_dongle_06
+        distance_matric[2][1] =  weight_dongle_04_to_dongle_06
+
+        return distance_matric
+
+
+
+    # https://math.stackexchange.com/questions/3663043/im-now-stuck-in-how-to-convert-the-distance-matrix-to-the-real-coordinates-of-p
+    # https://www.displayr.com/what-is-a-distance-matrix/
+    # https://stackoverflow.com/questions/10963054/finding-the-coordinates-of-points-from-distance-matrix
+    def plot_xy_values(self, data_frame_1, data_frame_4, data_frame_6):
+        
+        distance_matric = numpy.zeros((3, 3))
+        
+        weight_router_to_dongle_04 =  data_frame_1["RX_neighbor1"].values[0]
+        weight_router_to_dongle_06 = data_frame_1["RX_neighbor2"].values[0]
+        weight_dongle_04_to_dongle_06 =  data_frame_4["RX_neighbor2"].values[0]
+
+        distance_matric[0][1] = weight_router_to_dongle_04
+        distance_matric[0][2] = weight_router_to_dongle_06
+        distance_matric[1][0] = weight_router_to_dongle_04
+        distance_matric[1][2] = weight_dongle_04_to_dongle_06
+        distance_matric[2][0] = weight_router_to_dongle_06
+        distance_matric[2][1] = weight_dongle_04_to_dongle_06
+        print(f"dist matric \n {distance_matric}")
+        m_matrix = numpy.zeros((3, 3))
+
+        for i in range(3):
+            for j in range(3):
+                m_matrix[i][j] = 0.5 * ((distance_matric[1][j]**2) + (distance_matric[i][1]**2) -(distance_matric[i][j]**2))
+
+        print(f"m_matrix \n {m_matrix}")
+        eigvals, eigvecs = LA.eig(m_matrix)
+
+        print(f"eigen vals  : \n {eigvals}")
+        print(f"eigen vectors  : \n {eigvecs}")
+
+        results = []
+        for i in range(3):
+            if eigvals[i] != 0:
+                results.append(math.sqrt(eigvals[i])*eigvecs[i])
+        print(f"results \n {results}")
+        coords = numpy.reshape(results, (2,3)).T
+
+
+        print(coords)
+        X_vals = [coords[i][0] for i in range(3)]
+        Y_vals = [coords[i][1] for i in range(3)]
+    
+
+        plt.annotate(f"Roouter",  xy=(X_vals[0], Y_vals[0]))
+        plt.annotate(f"device 4", xy=(X_vals[1], Y_vals[1]))
+        plt.annotate(f"device 6", xy=(X_vals[2], Y_vals[2]))
+        
+        
+        plt.scatter(X_vals , Y_vals, s=230, c="black", marker="D")
+        plt.scatter(X_vals , Y_vals, s=180, c="red", marker="D" )
+        plt.plot([X_vals[0], X_vals[1]], [Y_vals[0], Y_vals[1]], c="red", linewidth=1, linestyle='--')
+        plt.plot([X_vals[0], X_vals[2]], [Y_vals[0], Y_vals[2]], c="red", linewidth=1, linestyle='--')
+        plt.plot([X_vals[1], X_vals[2]], [Y_vals[1], Y_vals[2]], c="red", linewidth=1, linestyle='--')
+        
+
+
+        dist1 = math.sqrt((X_vals[0]-X_vals[1])**2 + (Y_vals[0]- Y_vals[1])**2)
+        dist2 = math.sqrt((X_vals[0]-X_vals[2])**2 + (Y_vals[0]- Y_vals[2])**2)
+        dist3 = math.sqrt((X_vals[1]-X_vals[2])**2 + (Y_vals[1]- Y_vals[2])**2)
+        
+        print(f"dist1 : {dist1}" )
+        print(f"dist2 : {dist2}" )
+        print(f"dist3 : {dist3}" )
+        plt.show()
+
+
+    def calc_and_plot_xy_values(self):
+        
+        distance_matric = numpy.zeros((3, 3))
+
+        weight_router_to_dongle_04 =  234
+        weight_router_to_dongle_06 =  150
+        weight_dongle_04_to_dongle_06 =  231
+
+        distance_matric[0][1] = weight_router_to_dongle_04
+        distance_matric[0][2] = weight_router_to_dongle_06
+        distance_matric[1][0] = weight_router_to_dongle_04
+        distance_matric[1][2] = weight_dongle_04_to_dongle_06
+        distance_matric[2][0] = weight_router_to_dongle_06
+        distance_matric[2][1] = weight_dongle_04_to_dongle_06
+
+        print(f"dist matric \n {distance_matric}")
+        m_matrix = numpy.zeros((3, 3))
+
+        for i in range(3):
+            for j in range(3):
+                m_matrix[i][j] = 0.5 * ((distance_matric[1][j]**2) + (distance_matric[i][1]**2) -(distance_matric[i][j]**2))
+
+        print(f"m_matrix \n {m_matrix}")
+        eigvals, eigvecs = LA.eig(m_matrix)
+
+        print(f"eigen vals  : \n {eigvals}")
+        print(f"eigen vectors  : \n {eigvecs}")
+
+        results = []
+        for i in range(3):
+            if eigvals[i] != 0:
+                results.append(math.sqrt(eigvals[i])*eigvecs[i])
+        print(f"results \n {results}")
+        coords = numpy.reshape(results, (2,3)).T
+
+        print(coords)
+        X_vals = [coords[i][0] for i in range(3)]
+        Y_vals = [coords[i][1] for i in range(3)]
+
+        plt.annotate(f"Roouter",  xy=(X_vals[0], Y_vals[0]))
+        plt.annotate(f"device 4", xy=(X_vals[1], Y_vals[1]))
+        plt.annotate(f"device 6", xy=(X_vals[2], Y_vals[2]))
+        
+        plt.scatter(X_vals , Y_vals, s=230, c="black", marker="D")
+        plt.scatter(X_vals , Y_vals, s=180, c="red", marker="D" )
+        plt.plot([X_vals[0], X_vals[1]], [Y_vals[0], Y_vals[1]], c="red", linewidth=1, linestyle='--')
+        plt.plot([X_vals[0], X_vals[2]], [Y_vals[0], Y_vals[2]], c="red", linewidth=1, linestyle='--')
+        plt.plot([X_vals[1], X_vals[2]], [Y_vals[1], Y_vals[2]], c="red", linewidth=1, linestyle='--')
+
+        # Verify distances to given distance matrix
+        dist1 = math.sqrt((X_vals[0]-X_vals[1])**2 + (Y_vals[0]- Y_vals[1])**2)
+        dist2 = math.sqrt((X_vals[0]-X_vals[2])**2 + (Y_vals[0]- Y_vals[2])**2)
+        dist3 = math.sqrt((X_vals[1]-X_vals[2])**2 + (Y_vals[1]- Y_vals[2])**2)
+        
+        print(f"dist1 : {dist1}" )
+        print(f"dist2 : {dist2}" )
+        print(f"dist3 : {dist3}" )
+        plt.show()
