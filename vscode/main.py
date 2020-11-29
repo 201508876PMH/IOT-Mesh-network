@@ -13,12 +13,12 @@ if __name__ == "__main__":
     mesh_data_analyser = MeshDataAnalyser()
         
     while(1):
-        time.sleep(1)
-        data_fetcher.fetch_data_from_device()
 
-        data_parser.parse_log_to_csv("../Logfiles/logfile_node01.txt")
-        data_parser.parse_log_to_csv("../Logfiles/logfile_node06.txt")
-        data_parser.parse_log_to_csv("../Logfiles/logfile_node04.txt")
+        data_fetcher.fetch_data_from_device()
+        time.sleep(1)
+        data_parser.parse_log_to_csv("logfiles/logfile_node01.txt")
+        data_parser.parse_log_to_csv("logfiles/logfile_node06.txt")
+        data_parser.parse_log_to_csv("logfiles/logfile_node04.txt")
 #
         data_frame_1 = mesh_data_analyser.load_data_table("logfile_node01.csv")
         data_frame_4 = mesh_data_analyser.load_data_table("logfile_node04.csv")

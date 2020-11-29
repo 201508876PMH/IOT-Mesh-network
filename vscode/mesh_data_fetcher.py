@@ -1,4 +1,5 @@
-from subprocess import call
+import subprocess
+import os
 
 class MeshDataFetcher:
     def __init__(self, ip, user):
@@ -8,6 +9,7 @@ class MeshDataFetcher:
 
     def fetch_data_from_device(self):
         dir_to_fetch = "/root/logfiles"
-        call(["scp", "-r", f"{self.username}@{self.ip}:{dir_to_fetch}",  f"./logfiles"])
+        path = os.getcwd()
+        subprocess.check_call(["scp", "-r", f"{self.username}@{self.ip}:{dir_to_fetch}",  f"{path}/"], cwd=path)
 
  

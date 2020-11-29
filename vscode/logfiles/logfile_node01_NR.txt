@@ -1,0 +1,4 @@
+IP.addr:  inet addr:10.1.0.1
+Current timestamp:  2020/08/05-23:43:40
+Number of file iterations:  807
+

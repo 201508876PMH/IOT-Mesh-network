@@ -39,9 +39,9 @@ class MeshDataAnalyser():
 
         # Fix the mean value
         speed = 100
-        weight_router_to_dongle_04 =  self.normalize_to_speed(((data_frame_1["RX_neighbor1"].values[0]+ data_frame_1["TX_neighbor1"].values[0])/2), speed)
-        weight_router_to_dongle_06 = self.normalize_to_speed(((data_frame_1["RX_neighbor2"].values[0]+ data_frame_1["TX_neighbor2"].values[0])/2), speed)
-        weight_dongle_04_to_dongle_06 =  self.normalize_to_speed(((data_frame_4["RX_neighbor2"].values[0]+ data_frame_4["TX_neighbor2"].values[0])/2), speed)
+        weight_router_to_dongle_04 =  self.normalize_to_speed(((data_frame_1["RX_neighbor1"].values[0]+ data_frame_1["TX_neighbor1"].values[0] + data_frame_4["RX_neighbor1"] + data_frame_4["TX_neighbor1"] )/4), speed)
+        weight_router_to_dongle_06 = self.normalize_to_speed(((data_frame_1["RX_neighbor2"].values[0]+ data_frame_1["TX_neighbor2"].values[0] + data_frame_6["RX_neighbor2"] + data_frame_6["TX_neighbor2"])/4), speed)
+        weight_dongle_04_to_dongle_06 =  self.normalize_to_speed(((data_frame_4["RX_neighbor2"].values[0]+ data_frame_4["TX_neighbor2"].values[0]+ data_frame_6["RX_neighbor1"] + data_frame_6["TX_neighbor1"])/4), speed)
         
         # Add weight between nodes
         G['R']['D04']['weight'] = weight_router_to_dongle_04 
