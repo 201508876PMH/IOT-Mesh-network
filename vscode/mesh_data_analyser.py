@@ -9,6 +9,7 @@ from tabulate import tabulate
 import numpy as np
 import sympy
 
+
 class MeshDataAnalyser():
     def __init__(self):
         pass
@@ -69,13 +70,14 @@ class MeshDataAnalyser():
 
         # Make the graph - add the pos and connectionstyle arguments
         nx.draw(G,with_labels=True, pos=nodePosDict,
-                node_size=1500, alpha=0.3, font_weight="bold", arrows=True,
+            node_size=1500, alpha=0.3, font_weight="bold", arrows=True,
             connectionstyle='arc3, rad = 0.1')
-
-        #plt.axis.set_xticks(1000)
-        #plt.axis.set_yticks(1000)
+            
         plt.axis('on')
+        plt.pause(3)
         plt.show()
+
+
 
 
     # https://stackoverflow.com/questions/18096783/using-distance-matrix-to-find-coordinate-points-of-set-of-points 

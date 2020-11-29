@@ -7,3 +7,6 @@ pip install tabulate
 pip install networkx
 pip install pandas
 pip install matplotlib
+pip install scp
+pip install paramiko
+pip install sympy

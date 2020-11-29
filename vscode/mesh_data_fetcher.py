@@ -1,16 +1,13 @@
-from paramiko import SSHClient
-from scp import SCPClient
+from subprocess import call
 
 class MeshDataFetcher:
-    def __init__(self, ip):
+    def __init__(self, ip, user):
         self.ip = ip
-        self.ssh = SSHClient()
-        self.ssh.load_system_host_keys()
-        username = "root" 
-        self.ssh.connect(f"{username}@{ip}")
+        self.username = user
+
 
     def fetch_data_from_device(self):
         dir_to_fetch = "/root/logfiles"
+        call(["scp", "-r", f"{self.username}@{self.ip}:{dir_to_fetch}",  f"./logfiles"])
 
-        with SCPClient(self.ssh.get_transport()) as scp:
-            scp.get(dir_to_fetch)
+ 
