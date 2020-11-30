@@ -9,18 +9,19 @@ getIPAddr(){
 counter=0
 while true
 	do
-	sleep 1
-	timevariable=$(timestamp)
-	IPAddr=$(getIPAddr)
-	counter=$(($counter+1))
-	echo "IP.addr: " $IPAddr > /root/logfiles/logfile_node01.txt
-	echo "Current timestamp: " $timevariable >> /root/logfiles/logfile_node01.txt
-	echo "Number of file iterations: " $counter >> /root/logfile/logfile_node01.txt
-        echo "" >> /root/logfiles/logfile_node01.txt
-	meshmerize neighbor >> /root/logfiles/logfile_node01.txt
-	echo "" >> /root/logfiles/logfile_node01.txt
-	meshmerize originator >> /root/logfiles/logfile_node01.txt
-
+	 timevariable=$(timestamp)
+	 IPAddr=$(getIPAddr)
+	 counter=$(($counter+1))
+	 echo "IP.addr: " $IPAddr > /root/logfiles/logfile_node01_NR.txt
+	 echo "Current timestamp: " $timevariable >> /root/logfiles/logfile_node01_NR.txt
+	 echo "Number of file iterations: " $counter >> /root/logfiles/logfile_node01_NR.txt
+	 echo "" >> /root/logfiles/logfile_node01_NR.txt
+	 meshmerize neighbor >> /root/logfiles/logfile_node01_NR.txt
+	 echo "" >> /root/logfiles/logfile_node01_NR.txt
+	 meshmerize originator >> /root/logfiles/logfile_node01_NR.txt
+	 mv /root/logfiles/logfile_node01_NR.txt /root/logfiles/logfile_node01.txt
+	 sleep 1
+	
 done
 
 
