@@ -7,6 +7,5 @@ IOT project for semster 8 in software engineering
 - pip install networkx
 - pip install pandas
 - pip install matplotlib
-- pip install scp
 - pip install paramiko
 - pip install sympy
