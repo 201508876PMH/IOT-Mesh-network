@@ -43,16 +43,6 @@ class MeshDataParser:
                                neighbor2_mac + ", " +
                                neighbor2_rx + ", " +
                                neighbor2_tx + "\n")
-
-                #print(f"Ip:  {ip_current}")
-                #print(f"Timestamp :  {time_stamp}")
-                #print(f"Iterations :  {iterations}")
-                #print(f"Neighbor1 mac : {neighbor1_mac}")
-                #print(f"Neighbor1 TX :  {neighbor1_tx}")
-                #print(f"Neighbor1 RX :  {neighbor1_rx}")
-                #print(f"Neighbor2 mac : {neighbor2_mac}")
-                #print(f"Neighbor2 TX :  {neighbor2_tx}")
-                #print(f"Neighbor2 RX :  {neighbor2_rx}")
                         
         
 

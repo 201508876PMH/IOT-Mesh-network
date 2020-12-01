@@ -1,0 +1,2 @@
+ip,iterations,timestamp,mac_device1,device1_metric,mac_devive1_neighbor,devive1_neighbor_metric,mac_device2,device2_metric,mac_devive2_neighbor,devive2_neighbor_metric
+addr:10.1.0.4, 288, 2020/08/05-13:18:06, e4:95:6e:4b:b7:13, 512, 94:83:c4:02:8c:0e, 497, 94:83:c4:02:8c:0e, 497, e4:95:6e:4b:b7:13, 497
