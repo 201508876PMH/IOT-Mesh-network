@@ -48,16 +48,16 @@ class MeshDataParser:
                 mac_devive2_neighbor = log_lines[index_for_second_dev+2].split()[0]
                 devive2_neighbor_metric = log_lines[index_for_second_dev+2].split()[3].split(",")[0]
 
-                csv_file.write(ip_current + ", " +
-                               iterations + ", " +
-                               time_stamp + ", " +
-                               mac_device1 + ", " +
-                               device1_metric + ", " +
-                               mac_devive1_neighbor + ", " +
-                               devive1_neighbor_metric + ", " +
-                               mac_device2 + ", " +
-                               device2_metric + ", " +
-                               mac_devive2_neighbor + ", " +
+                csv_file.write(ip_current + "," +
+                               iterations + "," +
+                               time_stamp + "," +
+                               mac_device1 + "," +
+                               device1_metric + "," +
+                               mac_devive1_neighbor + "," +
+                               devive1_neighbor_metric + "," +
+                               mac_device2 + "," +
+                               device2_metric + "," +
+                               mac_devive2_neighbor + "," +
                                devive2_neighbor_metric + "\n")
 
         

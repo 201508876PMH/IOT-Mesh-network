@@ -6,7 +6,7 @@ import time
 if __name__ == "__main__":
     router_ip = "10.1.0.1"
     router_username = "root"
-    #data_fetcher = MeshDataFetcher(router_ip, router_username)
+    data_fetcher = MeshDataFetcher(router_ip, router_username)
 
     data_parser = MeshDataParser()
    
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     #    
     while(1):
         time.sleep(1)
-    #    data_fetcher.fetch_data_from_device()
+        data_fetcher.fetch_data_from_device()
 #
         data_parser.parse_log_to_csv("logfiles/logfile_node01.txt")
         data_parser.parse_log_to_csv("logfiles/logfile_node06.txt")
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         data_frame_6 = mesh_data_analyser.load_data_table("logfile_node06.csv")
 
         mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
-    #print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
+        print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
 #
     #
     
