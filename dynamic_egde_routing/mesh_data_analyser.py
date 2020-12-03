@@ -60,8 +60,32 @@ class MeshDataAnalyser():
 
         nx.draw_networkx_edges(G,nodePosDict, edgelist=edges,  width=1,alpha=0.5)
            
-        shortest_path_edges = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6') 
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6') 
         nx.draw_networkx_edges(G,nodePosDict, edgelist=shortest_path_edges,  width=5,alpha=0.8,edge_color='r')
+
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.4')
+                
+        dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
+        
+        dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
+        print("\n\rROUTER ROUTING TABLE\n\r")
+        self.show_routing_table("D04", dongle_04_next_hop, "D06", dongle_06_next_hop)
+
+        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.1')
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.6')
+
+        router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
+        dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
+        print("\n\rDONGLE 04 ROUTING TABLE\n\r")
+        self.show_routing_table("R", router_next_hop, "D06", dongle_06_next_hop)
+
+        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.1')
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.4')
+
+        router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
+        dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
+        print("\n\rDONGLE 06 ROUTING TABLE\n\r")
+        self.show_routing_table("R", router_next_hop, "D04", dongle_04_next_hop)
 
         #colors = [G[u][v]["color"] for u,v in edges]
         # Make the graph - add the pos and connectionstyle arguments
@@ -99,9 +123,11 @@ class MeshDataAnalyser():
         if(routing_table["mac_device1"][0] == destination_mac):
             start_path = routing_table['device1_metric'][0]
             shortest_path_edgelist.append((current_node_label, destination_label))
+            dongle_06_next_hop_mac=routing_table["mac_device1"][0]
         else:
             start_path = routing_table['device2_metric'][0]
             shortest_path_edgelist.append((current_node_label, destination_label))
+            dongle_06_next_hop_mac=routing_table["mac_device2"][0]
 
         #Check second layer neighbours
         if(routing_table['mac_devive1_neighbor'][0] == destination_mac):
@@ -118,11 +144,35 @@ class MeshDataAnalyser():
                 start_path = combined_metric
                 shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device1'][0])))
                 shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device1'][0]), destination_label))
+                dongle_06_next_hop_mac=routing_table["mac_device1"][0]
+
+        else:
+            distance_layer_01= int(routing_table['device2_metric'][0])
+            distance_layer_01 -= self.simulation_counter
+
+            distance_layer_02 = int(routing_table['devive2_neighbor_metric'][0])
+            combined_metric = distance_layer_01 + distance_layer_02
+            print("COMVINED DISNTANCE:", combined_metric)
+            print("SHORTEST PATJ:" , start_path)
+
+            if(combined_metric <  start_path):
+                shortest_path_edgelist.clear()
+                start_path = combined_metric
+                shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device2'][0])))
+                shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device2'][0]), destination_label))
+                dongle_06_next_hop_mac=routing_table["mac_device2"][0]
 
         self.simulation_counter += 200
-        return shortest_path_edgelist
+        return shortest_path_edgelist, dongle_06_next_hop_mac
 
 
+    def show_routing_table(self, node1, node1_next_hop, node2, node2_next_hop):
+
+        route_dongles = [(node1, node1_next_hop), (node2, node2_next_hop)]
+        print(tabulate(route_dongles, headers=["Destination", "Next Hop"]))   
+        print("\n\r")    
+
+    
 
 
 
