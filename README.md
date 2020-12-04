@@ -8,12 +8,12 @@ For this project the overall goal is to further understand how the WiFi mesh net
 - - - -
 
 # Current repo
-* `Dynamically_plot_edges`
+* `Dynamically_plot_edges` <br />
 In this folder running `python3 ./main` without fetching live data, will result in the following images. The program tries to depict how the mesh network always chooses the shortest path,
 ![picture alt](https://i.imgur.com/cgwZ9oH.png/200x150 "Title is optional")
 ![picture alt](https://i.imgur.com/xsKUtps.png/200x150 "Title is optional")
 
-* `Dynamically_plot_nodes`
+* `Dynamically_plot_nodes` <br />
 In this folder running `python3 ./main` without fetching live data, will resul in the following image. The program tries to depict how nodes will have a greater distance on how strong their TX & RX rates are.
 ![picture alt](https://i.imgur.com/F7nQ5GQ.png "Title is optional")
 
