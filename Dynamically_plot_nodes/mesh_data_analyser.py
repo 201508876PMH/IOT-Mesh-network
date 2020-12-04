@@ -86,40 +86,6 @@ class MeshDataAnalyser():
         plt.pause(1)
 
 
-    def test_plot_V2(self):
-        #plt.ion()
-        fig, ax = plt.subplots(nrows=2, ncols=1)
-        #plt.show()
-
-        while True:
-            x=np.arange(10)
-            y=np.random.rand(10)
-
-            ax[0].plot(x,y)
-            ax[1].plot(x,2*y)
-
-            plt.draw()
-
-            plt.pause(3)
-
-    def test_plot(self):
-        x = np.linspace(0, 6*np.pi, 100)
-        y = np.sin(x)
-
-        # You probably won't need this if you're embedding things in a tkinter plot...
-        plt.ion()
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        line1, = ax.plot(x, y, 'r-') # Returns a tuple of line objects, thus the comma
-
-        for phase in np.linspace(0, 10*np.pi, 500):
-            line1.set_ydata(np.sin(x + phase))
-            fig.canvas.draw()
-            fig.canvas.flush_events()
-
-
-
     # https://stackoverflow.com/questions/18096783/using-distance-matrix-to-find-coordinate-points-of-set-of-points 
     def give_coords(self, distances):
         distances = np.array(distances)
@@ -159,7 +125,6 @@ class MeshDataAnalyser():
         distance_matric[2][1] =  weight_dongle_04_to_dongle_06
 
         return distance_matric
-
 
 
     # https://math.stackexchange.com/questions/3663043/im-now-stuck-in-how-to-convert-the-distance-matrix-to-the-real-coordinates-of-p

@@ -12,11 +12,13 @@ if __name__ == "__main__":
    
     mesh_data_analyser = MeshDataAnalyser()    
     
-    #    
+    #While(1) for continuous plotting    
     while(1):
         time.sleep(1)
+
+        #UnComment the following for real data
+        
         #data_fetcher.fetch_data_from_device()
-#
         #data_parser.parse_log_to_csv("logfiles/logfile_node01.txt")
         #data_parser.parse_log_to_csv("logfiles/logfile_node06.txt")
         #data_parser.parse_log_to_csv("logfiles/logfile_node04.txt")
@@ -27,8 +29,8 @@ if __name__ == "__main__":
 
         mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
         print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
-#
-    #
+
+    
     
 
 
