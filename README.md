@@ -19,7 +19,7 @@ In this folder running `python3 ./main` without fetching live data, will result 
 
 In this folder running `python3 ./main` without fetching live data, will resul in the following image. The program tries to depict how nodes will have a greater distance on how strong their TX & RX rates are.<br />
 
-![Dynamic plotting of nodes](https://i.imgur.com/F7nQ5GQ.png "Dynamic plotting of nodes")
+<img src="https://i.imgur.com/F7nQ5GQ.png" width="350">
 
 _The plotting has been done possible why the use of the python library https://networkx.org/_
 
