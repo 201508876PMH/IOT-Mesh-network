@@ -16,7 +16,7 @@ In this folder running `python3 ./main` without fetching live data, will result 
 
 #### Dynamically_plot_nodes
 
-In this folder running `python3 ./main` without fetching live data, will resul in the following image. The program tries to depict how nodes will have a greater distance on how strong their TX & RX rates are.<br />
+In this folder running `python3 ./main` without fetching live data, will result in the following image. The program tries to depict how nodes will have a greater distance on how strong their TX & RX rates are.<br />
 
 <img src="https://i.imgur.com/F7nQ5GQ.png" width="350">
 
