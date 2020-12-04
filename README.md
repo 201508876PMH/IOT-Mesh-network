@@ -1,5 +1,6 @@
 # IOT-Mesh
-IOT project for semster 8 in software engineering
+IOT project for semster 8 in software engineering.
+![Mini-project propsal from AU](https://imgur.com/a/sep8ExK)
 
 ## Prereqs for running ##
 
