@@ -12,8 +12,8 @@ For this project the overall goal is to further understand how the WiFi mesh net
 #### Dynamically_plot_edges 
 
 In this folder running `python3 ./main` without fetching live data, will result in the following images. The program tries to depict how the mesh network always chooses the shortest path.<br />
-<img src="https://i.imgur.com/cgwZ9oH.png" width="300">
-<img src="https://i.imgur.com/xsKUtps.png" width="300">
+<img src="https://i.imgur.com/cgwZ9oH.png" width="350">
+<img src="https://i.imgur.com/xsKUtps.png" width="350">
 
 #### Dynamically_plot_nodes
 
