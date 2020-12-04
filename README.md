@@ -1,5 +1,5 @@
-# IOT-Mesh
-![Picture of shortest path](https://i.imgur.com/cF4ejvv.png "")
+![Picture of shortest path](https://i.imgur.com/cF4ejvv.png "")<br />
+
 IOT project for semster 8 in software engineering.
 For this project the overall goal is to further understand how the WiFi mesh network (supported by the IEEE 802.11s standard) operates. For this and furthermore, a set of bulletpoints have been made: 
 - This project aims to characterize WiFi mesh networking based on off-the-shelf network components from Meshmerize.
