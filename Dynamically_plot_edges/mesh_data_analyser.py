@@ -14,6 +14,7 @@ class MeshDataAnalyser():
     def __init__(self):
         # Turn interative mode on
         self.simulation_counter = 50
+        plt.figure()
         plt.ion()
         # show any figures (This will NOT block if interactive mode is on)
         plt.show()
@@ -28,7 +29,7 @@ class MeshDataAnalyser():
         return data_frame
 
 
-    def plot_data(self, data_frame_1, data_frame_4, data_frame_6):
+    def plot_data(self, data_frame_1, data_frame_4, data_frame_6, start_node, arrival_node_ip):
         plt.clf()
         axes = plt.gca()
         axes.set_xlim([-0.1,6])
@@ -61,7 +62,7 @@ class MeshDataAnalyser():
         nx.draw_networkx_edges(G,nodePosDict, edgelist=edges,  width=1,alpha=0.5)
            
         # Overlap original edges with shortest path and with color red
-        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6') 
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(start_node, arrival_node_ip) 
         nx.draw_networkx_edges(G,nodePosDict, edgelist=shortest_path_edges,  width=3,alpha=0.8,edge_color='r')
 
         #print routing tables
@@ -142,7 +143,7 @@ class MeshDataAnalyser():
                 shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device2'][0]), destination_label))
                 dongle_06_next_hop_mac=routing_table["mac_device2"][0]
 
-        self.simulation_counter += 200
+        self.simulation_counter += 50
         return shortest_path_edgelist, dongle_06_next_hop_mac
 
 

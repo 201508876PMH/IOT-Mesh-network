@@ -10,7 +10,9 @@ if __name__ == "__main__":
 
     data_parser = MeshDataParser()
    
-    mesh_data_analyser = MeshDataAnalyser()    
+    mesh_data_analyser = MeshDataAnalyser()   
+    mesh_data_analyser_2 = MeshDataAnalyser()
+    mesh_data_analyser_3 = MeshDataAnalyser() 
     
     #While(1) for continuous plotting    
     while(1):
@@ -27,7 +29,9 @@ if __name__ == "__main__":
         data_frame_4 = mesh_data_analyser.load_data_table("logfile_node04.csv")
         data_frame_6 = mesh_data_analyser.load_data_table("logfile_node06.csv")
 
-        mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6)
+        mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_1, 'addr:10.1.0.4')
+        mesh_data_analyser_2.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_1, 'addr:10.1.0.6')
+        mesh_data_analyser_3.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_4, 'addr:10.1.0.6')
         print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
 
     
