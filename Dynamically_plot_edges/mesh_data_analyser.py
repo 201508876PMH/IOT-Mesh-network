@@ -65,7 +65,7 @@ class MeshDataAnalyser():
         nx.draw_networkx_edges(G,nodePosDict, edgelist=shortest_path_edges,  width=3,alpha=0.8,edge_color='r')
 
         #print routing tables
-        self.show_routing_tables(data_frame_4, data_frame_6)
+        self.show_routing_tables(data_frame_1, data_frame_4, data_frame_6)
 
         # Make the graph - add the pos and connectionstyle arguments
         nx.draw(G,with_labels=True, pos=nodePosDict, node_size=1500, alpha=0.3, font_weight="bold", arrows=True)
@@ -152,23 +152,35 @@ class MeshDataAnalyser():
         print("\n\r")    
 
 
-    def show_routing_tables(self, data_frame_4, data_frame_6):
+    def show_routing_tables(self, data_frame_1, data_frame_4, data_frame_6):
+
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.4')
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6')
+
+        dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
+        dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
+        print("\nROUTER ROUTING TABLE\n")
+        self.show_routing_table("D04", dongle_04_next_hop, "D06", dongle_06_next_hop)
+
+
         shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.1')
-        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.4')
         shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.6')
 
+        router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
+        dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
+        print("\nDONGLE 04 ROUTING TABLE\n")
+        self.show_routing_table("R", router_next_hop, "D06", dongle_06_next_hop)
+
+
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.4')
+        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.1')
 
         router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
         dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
-        dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
-
-        print("\nROUTER ROUTING TABLE\n")
-        self.show_routing_table("D04", dongle_04_next_hop, "D06", dongle_06_next_hop)
-        print("DONGLE 04 ROUTING TABLE\n")
-        self.show_routing_table("R", router_next_hop, "D06", dongle_06_next_hop)
-        print("DONGLE 06 ROUTING TABLE\n")
+        print("\nDONGLE 06 ROUTING TABLE\n")
         self.show_routing_table("R", router_next_hop, "D04", dongle_04_next_hop)
-    
+
+            
 
 
 
