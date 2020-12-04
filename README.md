@@ -1,4 +1,4 @@
-![Picture of shortest path](https://i.imgur.com/cF4ejvv.png "")<br />
+# ![Picture of shortest path](https://i.imgur.com/cF4ejvv.png "")<br />
 
 IOT project for semster 8 in software engineering.
 For this project the overall goal is to further understand how the WiFi mesh network (supported by the IEEE 802.11s standard) operates. For this and furthermore, a set of bulletpoints have been made: 
@@ -6,7 +6,6 @@ For this project the overall goal is to further understand how the WiFi mesh net
 - The project defines a set of performance metrics and conduct experiments to characterize the performance.
 - A comparison between different ad hoc routing schemes is included in the project a preferable backed with quantitative investigation if the time allows.
 
-- - - -
 
 # Current repo
 #### Dynamically_plot_edges 
