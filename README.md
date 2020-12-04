@@ -20,7 +20,7 @@ In this folder running `python3 ./main` without fetching live data, will result 
 
 <img src="https://i.imgur.com/F7nQ5GQ.png" width="350">
 
-_The plotting has been done possible why the use of the python library https://networkx.org/_
+_The plotting has been done possible by the use of the python library https://networkx.org/_
 
 ## Prereqs for running ##
 
