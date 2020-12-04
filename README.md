@@ -28,5 +28,4 @@ _The plotting has been done possible by the use of the python library https://ne
 - pip install networkx
 - pip install pandas
 - pip install matplotlib
-- pip install paramiko
 - pip install sympy
