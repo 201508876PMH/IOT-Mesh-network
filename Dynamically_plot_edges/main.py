@@ -10,12 +10,12 @@ if __name__ == "__main__":
 
     data_parser = MeshDataParser()
 
-    ## Enable simolation
-    with_simolation = True
+    ## Enable simulation
+    with_simulation = True
 
-    mesh_data_analyser = MeshDataAnalyser("Shortes routing path from Router to D04", do_simu = with_simolation)   
-    mesh_data_analyser_2 = MeshDataAnalyser("Shortes routing path from Router to D06",  do_simu = with_simolation)
-    mesh_data_analyser_3 = MeshDataAnalyser("Shortes routing path from D04 to D06",  do_simu = with_simolation) 
+    mesh_data_analyser = MeshDataAnalyser("Shortes routing path from Router to D04", do_simu = with_simulation)   
+    mesh_data_analyser_2 = MeshDataAnalyser("Shortes routing path from Router to D06",  do_simu = with_simulation)
+    mesh_data_analyser_3 = MeshDataAnalyser("Shortes routing path from D04 to D06",  do_simu = with_simulation) 
     
     #While(1) for continuous plotting    
     while(1):
