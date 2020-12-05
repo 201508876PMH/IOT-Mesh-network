@@ -15,7 +15,7 @@ class MeshDataAnalyser():
         # Turn interative mode on
         self.do_simu = do_simu
         self.title = title
-        self.simulation_counter = 50
+        self.simulation_counter = 80
         self.figure = plt.figure()
         plt.ion()
         # show any figures (This will NOT block if interactive mode is on)
