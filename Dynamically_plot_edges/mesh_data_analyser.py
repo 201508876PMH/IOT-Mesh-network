@@ -89,23 +89,24 @@ class MeshDataAnalyser():
                        '94:83:c4:02:8c:0e' : 'R'}
         return fetched_mac[mac]
 
-    def find_smallest_path(self, routing_table, destination_node, do_simu = False):
+    def find_smallest_path(self, routing_table, destination_node, do_simu = False, do_minus  = True):
         start_path = (2^32)-1
         shortest_path_edgelist = []
         current_node_mac, current_node_label = self.get_mac_from_ip(routing_table['ip'][0])
         destination_mac, destination_label = self.get_mac_from_ip(destination_node)
 
+        next_hop_mac = None
         #Check first layer neighbours
         if(routing_table["mac_device1"][0] == destination_mac):
             #print("direct acces 1")
             start_path = routing_table['device1_metric'][0]
             shortest_path_edgelist.append((current_node_label, destination_label))
-            dongle_06_next_hop_mac=routing_table["mac_device1"][0]
+            next_hop_mac =routing_table["mac_device1"][0]
         else:
             #print("direct acces 2")
             start_path = routing_table['device2_metric'][0]
             shortest_path_edgelist.append((current_node_label, destination_label))
-            dongle_06_next_hop_mac=routing_table["mac_device2"][0]
+            next_hop_mac = routing_table["mac_device2"][0]
 
         #Check second layer neighbours
         if(routing_table['mac_devive1_neighbor'][0] == destination_mac):
@@ -121,7 +122,7 @@ class MeshDataAnalyser():
                 start_path = combined_metric
                 shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device1'][0])))
                 shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device1'][0]), destination_label))
-                dongle_06_next_hop_mac=routing_table["mac_device1"][0]
+                next_hop_mac=routing_table["mac_device1"][0]
 
         else:
             distance_layer_01= int(routing_table['device2_metric'][0])
@@ -136,11 +137,10 @@ class MeshDataAnalyser():
                 start_path = combined_metric
                 shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device2'][0])))
                 shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device2'][0]), destination_label))
-                dongle_06_next_hop_mac=routing_table["mac_device2"][0]
+                next_hop_mac=routing_table["mac_device2"][0]
 
-        self.simulation_counter += 50 if do_simu else 0  
-        #print(self.simulation_counter)
-        return shortest_path_edgelist, dongle_06_next_hop_mac
+        self.simulation_counter += 50 if do_simu  and do_minus else 0  
+        return shortest_path_edgelist, next_hop_mac
 
 
     def show_routing_table(self, node1, node1_next_hop, node2, node2_next_hop):
@@ -151,33 +151,27 @@ class MeshDataAnalyser():
 
     def show_routing_tables(self, data_frame_1, data_frame_4, data_frame_6):
 
-        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.4', do_simu=False)
-        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6', do_simu=False)
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.4', do_simu=self.do_simu, do_minus=False)
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_1, 'addr:10.1.0.6', do_simu=self.do_simu, do_minus=False)
 
         dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
         dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
+
+        print(f"next hop mac {dongle_04_next_hop_mac} , and label : {dongle_04_next_hop}")
         print("\nROUTER ROUTING TABLE\n")
         self.show_routing_table("D04", dongle_04_next_hop, "D06", dongle_06_next_hop)
 
-
-        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.1',  do_simu=False)
-        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.6',  do_simu=False)
-
+        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.1',  do_simu=self.do_simu, do_minus=False)
+        shortest_path_edges, dongle_06_next_hop_mac = self.find_smallest_path(data_frame_4, 'addr:10.1.0.6',  do_simu=self.do_simu, do_minus=False)
         router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
         dongle_06_next_hop=self.get_label_from_mac(dongle_06_next_hop_mac)
         print("\nDONGLE 04 ROUTING TABLE\n")
         self.show_routing_table("R", router_next_hop, "D06", dongle_06_next_hop)
 
-
-        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.4',  do_simu=False)
-        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.1',  do_simu=False)
-
+        shortest_path_edges, dongle_04_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.4',  do_simu=self.do_simu, do_minus=False)
+        shortest_path_edges, router_next_hop_mac = self.find_smallest_path(data_frame_6, 'addr:10.1.0.1', do_simu=self.do_simu, do_minus=False)
         router_next_hop=self.get_label_from_mac(router_next_hop_mac)        
         dongle_04_next_hop=self.get_label_from_mac(dongle_04_next_hop_mac)
         print("\nDONGLE 06 ROUTING TABLE\n")
         self.show_routing_table("R", router_next_hop, "D04", dongle_04_next_hop)
-
-            
-
-
 
