@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     mesh_data_analyser = MeshDataAnalyser("Shortes routing path from Router to D04", do_simu = with_simulation)   
     mesh_data_analyser_2 = MeshDataAnalyser("Shortes routing path from Router to D06",  do_simu = with_simulation)
-    #mesh_data_analyser_3 = MeshDataAnalyser("Shortes routing path from D04 to D06",  do_simu = with_simulation) 
+    mesh_data_analyser_3 = MeshDataAnalyser("Shortes routing path from D04 to D06",  do_simu = with_simulation) 
     
     #While(1) for continuous plotting    
     while(1):
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
         mesh_data_analyser.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_1, 'addr:10.1.0.4')
         mesh_data_analyser_2.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_1, 'addr:10.1.0.6')
-        #mesh_data_analyser_3.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_4, 'addr:10.1.0.6')
+        mesh_data_analyser_3.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_4, 'addr:10.1.0.6')
 
         
         mesh_data_analyser.show_routing_tables(data_frame_1, data_frame_4, data_frame_6)
