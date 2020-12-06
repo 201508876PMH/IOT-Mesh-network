@@ -114,7 +114,9 @@ class MeshDataAnalyser():
         if(routing_table['mac_devive1_neighbor'][0] == destination_mac):
             distance_layer_01 = int(routing_table['device1_metric'][0])
             distance_layer_01 -= self.simulation_counter if do_simu else 0
-            if(((current_node_mac=='e4:95:6e:4b:be:d3' and destination_mac=='e4:95:6e:4b:b7:13') or (current_node_mac=='e4:95:6e:4b:b7:13' and destination_mac=='e4:95:6e:4b:be:d3'))  and do_simu):
+            dong_04_mac, dong_04_label=self.get_mac_from_ip('addr:10.1.0.4')
+            dong_06_mac, dong_06_label=self.get_mac_from_ip('addr:10.1.0.6')
+            if(((current_node_mac==dong_04_mac and destination_mac==dong_06_mac) or (current_node_mac==dong_06_mac and destination_mac==dong_04_mac))  and do_simu):
                 start_path-=self.simulation_counter
                 distance_layer_01+=self.simulation_counter  
 
@@ -133,7 +135,9 @@ class MeshDataAnalyser():
             distance_layer_01= int(routing_table['device2_metric'][0])
             #print("dist layer 1 ", distance_layer_01)
             distance_layer_01 -= self.simulation_counter if do_simu else 0
-            if(((current_node_mac=='e4:95:6e:4b:be:d3' and destination_mac=='e4:95:6e:4b:b7:13') or (current_node_mac=='e4:95:6e:4b:b7:13' and destination_mac=='e4:95:6e:4b:be:d3')) and do_simu):
+            dong_04_mac, dong_04_label=self.get_mac_from_ip('addr:10.1.0.4')
+            dong_06_mac, dong_06_label=self.get_mac_from_ip('addr:10.1.0.6')
+            if(((current_node_mac==dong_04_mac and destination_mac==dong_06_mac) or (current_node_mac==dong_06_mac and destination_mac==dong_04_mac))  and do_simu):
                 start_path-=self.simulation_counter
                 distance_layer_01+=self.simulation_counter   
 
