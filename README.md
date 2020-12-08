@@ -29,3 +29,4 @@ _The plotting has been done possible by the use of the python library https://ne
 - pip install pandas
 - pip install matplotlib
 - pip install sympy
+- pip install numpy==1.19.3
