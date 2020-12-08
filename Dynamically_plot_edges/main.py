@@ -9,7 +9,6 @@ if __name__ == "__main__":
     data_fetcher = MeshDataFetcher(router_ip, router_username)
 
     data_parser = MeshDataParser()
-
     ## Enable simulation
     with_simulation = True
 
@@ -37,7 +36,7 @@ if __name__ == "__main__":
         mesh_data_analyser_3.plot_data(data_frame_1, data_frame_4, data_frame_6, data_frame_4, 'addr:10.1.0.6')
 
         
-        mesh_data_analyser.show_routing_tables(data_frame_1, data_frame_4, data_frame_6)
+        #mesh_data_analyser.show_routing_tables(data_frame_1, data_frame_4, data_frame_6)
         #print(tabulate(data_frame_1, headers='keys', tablefmt='psql'))
 
     

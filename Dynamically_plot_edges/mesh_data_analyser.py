@@ -45,7 +45,8 @@ class MeshDataAnalyser():
         # weight for the metrics 
         metric_router_to_d04 = data_frame_1["device1_metric"][0]
         metric_router_to_d06 = data_frame_1["device2_metric"][0]
-        metric_d04_to_d06    = data_frame_1["devive1_neighbor_metric"][0]   
+        #metric_d04_to_d06    = data_frame_1["devive1_neighbor_metric"][0] 
+        metric_d04_to_d06 = data_frame_4["device1_metric"][0]  
         metric_d04_to_d06 -= self.simulation_counter if self.do_simu else 0  
 
         # Add weight between nodes
@@ -97,21 +98,22 @@ class MeshDataAnalyser():
 
         next_hop_mac = None
         #Check first layer neighbours
-        if(routing_table["mac_device1"][0] == destination_mac):
+        if(routing_table["mac_device1"][0] == destination_mac and not(math.isnan(routing_table['device1_metric'][0]))):
             #print("direct acces 1")
             start_path = routing_table['device1_metric'][0]
             shortest_path_edgelist.append((current_node_label, destination_label))
             next_hop_mac =routing_table["mac_device1"][0]
             #print(start_path)
         else:
-            #print("direct acces 2")
-            start_path = routing_table['device2_metric'][0]
-            shortest_path_edgelist.append((current_node_label, destination_label))
-            next_hop_mac = routing_table["mac_device2"][0]
-            #print(start_path)
+            if(routing_table["mac_device2"][0] == destination_mac and not(math.isnan(routing_table['device2_metric'][0]))):
+                #print("direct acces 2")
+                start_path = routing_table['device2_metric'][0]
+                shortest_path_edgelist.append((current_node_label, destination_label))
+                next_hop_mac = routing_table["mac_device2"][0]
+                #print(start_path)
 
         #Check second layer neighbours
-        if(routing_table['mac_devive1_neighbor'][0] == destination_mac):
+        if(routing_table['mac_devive1_neighbor'][0] == destination_mac and not(math.isnan(routing_table['devive1_neighbor_metric'][0])or math.isnan(routing_table['devive2_neighbor_metric'][0]) )):
             distance_layer_01 = int(routing_table['device1_metric'][0])
             distance_layer_01 -= self.simulation_counter if do_simu else 0
             dong_04_mac, dong_04_label=self.get_mac_from_ip('addr:10.1.0.4')
@@ -132,24 +134,25 @@ class MeshDataAnalyser():
                 next_hop_mac=routing_table["mac_device1"][0]
 
         else:
-            distance_layer_01= int(routing_table['device2_metric'][0])
-            #print("dist layer 1 ", distance_layer_01)
-            distance_layer_01 -= self.simulation_counter if do_simu else 0
-            dong_04_mac, dong_04_label=self.get_mac_from_ip('addr:10.1.0.4')
-            dong_06_mac, dong_06_label=self.get_mac_from_ip('addr:10.1.0.6')
-            if(((current_node_mac==dong_04_mac and destination_mac==dong_06_mac) or (current_node_mac==dong_06_mac and destination_mac==dong_04_mac))  and do_simu):
-                start_path-=self.simulation_counter
-                distance_layer_01+=self.simulation_counter   
+            if(not(math.isnan(routing_table['devive1_neighbor_metric'][0])or math.isnan(routing_table['devive2_neighbor_metric'][0]))):
+                distance_layer_01= int(routing_table['device2_metric'][0])
+                #print("dist layer 1 ", distance_layer_01)
+                distance_layer_01 -= self.simulation_counter if do_simu else 0
+                dong_04_mac, dong_04_label=self.get_mac_from_ip('addr:10.1.0.4')
+                dong_06_mac, dong_06_label=self.get_mac_from_ip('addr:10.1.0.6')
+                if(((current_node_mac==dong_04_mac and destination_mac==dong_06_mac) or (current_node_mac==dong_06_mac and destination_mac==dong_04_mac))  and do_simu):
+                    start_path-=self.simulation_counter
+                    distance_layer_01+=self.simulation_counter   
 
-            distance_layer_02 = int(routing_table['devive2_neighbor_metric'][0])
-            combined_metric = distance_layer_01 + distance_layer_02
-            #print("combined 2 " , combined_metric, "currect smalleest", start_path)
-            if(combined_metric <  start_path):
-                shortest_path_edgelist.clear()
-                start_path = combined_metric
-                shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device2'][0])))
-                shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device2'][0]), destination_label))
-                next_hop_mac=routing_table["mac_device2"][0]
+                distance_layer_02 = int(routing_table['devive2_neighbor_metric'][0])
+                combined_metric = distance_layer_01 + distance_layer_02
+                #print("combined 2 " , combined_metric, "currect smalleest", start_path)
+                if(combined_metric <  start_path):
+                    shortest_path_edgelist.clear()
+                    start_path = combined_metric
+                    shortest_path_edgelist.append((current_node_label, self.get_label_from_mac(routing_table['mac_device2'][0])))
+                    shortest_path_edgelist.append((self.get_label_from_mac(routing_table['mac_device2'][0]), destination_label))
+                    next_hop_mac=routing_table["mac_device2"][0]
 
         self.simulation_counter += 50 if do_simu  and do_minus else 0  
         return shortest_path_edgelist, next_hop_mac
